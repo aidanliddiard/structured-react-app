@@ -1,4 +1,4 @@
-import { client } from './client';
+import client from './client';
 
 export function getUser() {
   return client.auth.user();
