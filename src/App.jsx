@@ -1,5 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import { BlogProvider } from './context/BlogContext';
+import AddPage from './views/AddPage';
 import Auth from './views/Auth';
 import DetailView from './views/DetailView';
 import Home from './views/Home';
@@ -17,6 +18,9 @@ export default function App() {
           </Route>
           <Route path={'/blogs'}>
             <ListView />
+          </Route>
+          <Route path={'/add'}>
+            <AddPage />
           </Route>
           <Route path={'/'}>
             <Home />
