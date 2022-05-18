@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useBlogContext } from '../context/BlogContext';
+import { useBlogContext } from '../hooks/blogsHooks';
 
 export default function DetailView() {
   const { initialBlogs } = useBlogContext();

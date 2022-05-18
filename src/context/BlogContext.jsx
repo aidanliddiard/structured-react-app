@@ -1,46 +1,28 @@
 import { createContext } from 'react';
+import { useReducer } from 'react';
 import { useContext } from 'react';
 import { blogData } from '../../MockBlogData';
 
-const BlogContext = createContext();
+export const BlogContext = createContext();
 
-const BlogProvider = ({ children }) => {
-  //const initialBlogs = blogData;
+// const initialBlogs = {};
 
-  const initialBlogs = {};
+const blogReducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH':
+      return action.payload;
 
-  const blogReducer = (state = initialBlogs, action) => {
-    switch (action.type) {
-      case 'FETCH':
-        return { ...state, ...payload };
+    default:
+      throw new Error('not a defined type for reducer');
+  }
+};
 
-      default:
-        return state;
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const blogData = await fetchBlogs();
-      setBlogs(blogData);
-    };
-    fetchData();
-  }, []);
+export const BlogProvider = ({ children }) => {
+  const [blogList, dispatch] = useReducer(blogReducer);
 
   return (
-    <BlogContext.Provider value={{ initialBlogs }}>
+    <BlogContext.Provider value={{ blogList, dispatch }}>
       {children}
     </BlogContext.Provider>
   );
 };
-
-const useBlogContext = () => {
-  const context = useContext(BlogContext);
-
-  if (context === undefined) {
-    throw new Error('useBlogContext must be used within BlogProvider');
-  }
-  return context;
-};
-
-export { BlogProvider, useBlogContext };
