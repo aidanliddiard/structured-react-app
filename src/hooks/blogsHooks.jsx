@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useContext, useEffect } from 'react';
 import { BlogContext } from '../context/BlogContext';
-import { fetchBlogs } from '../utils/blogs';
+import { addBlog, fetchBlogs } from '../services/blogs';
 
 export function useBlogContext() {
   const context = useContext(BlogContext);
@@ -23,5 +23,14 @@ export function useBlogContext() {
     fetchData();
   }, []);
 
-  return { blogList, loading };
+  const add = async () => {
+    try {
+      const payload = await addBlog(newBlog);
+      dispatch({ type: 'ADD', payload });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  return { blogList, loading, add };
 }

@@ -11,7 +11,8 @@ const blogReducer = (state, action) => {
   switch (action.type) {
     case 'FETCH':
       return action.payload;
-
+    case 'ADD':
+      return [...state, action.payload];
     default:
       throw new Error('not a defined type for reducer');
   }
