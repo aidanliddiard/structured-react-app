@@ -48,6 +48,13 @@ export default function BlogForm() {
             <input aria-label="Windy checkbox" name="Windy" type="checkbox" />
             Windy
           </label>
+          <textarea
+            aria-label="description input"
+            name="description"
+            placeholder="Description"
+            type="text"
+            rows={5}
+          />
         </div>
         <button>Submit</button>
       </form>

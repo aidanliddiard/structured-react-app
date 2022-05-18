@@ -5,7 +5,27 @@ import { blogData } from '../../MockBlogData';
 const BlogContext = createContext();
 
 const BlogProvider = ({ children }) => {
-  const initialBlogs = blogData;
+  //const initialBlogs = blogData;
+
+  const initialBlogs = {};
+
+  const blogReducer = (state = initialBlogs, action) => {
+    switch (action.type) {
+      case 'FETCH':
+        return { ...state, ...payload };
+
+      default:
+        return state;
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const blogData = await fetchBlogs();
+      setBlogs(blogData);
+    };
+    fetchData();
+  }, []);
 
   return (
     <BlogContext.Provider value={{ initialBlogs }}>
