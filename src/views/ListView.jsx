@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useBlogContext } from '../hooks/blogsHooks';
 // import { blogData } from '../../MockBlogData';
+import { Link } from 'react-router-dom';
 
 export default function ListView() {
   // const [blogs, setBlogs] = useState([]);
@@ -14,7 +15,11 @@ export default function ListView() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        blogList.map((blog) => <h3 key={blog.id}>{blog.title}</h3>)
+        blogList.map((blog) => (
+          <h3 key={blog.id}>
+            {/* <Link to={`/blogs/${blog.id}`}>{blog.title}</Link> */}
+          </h3>
+        ))
       )}
     </>
   );

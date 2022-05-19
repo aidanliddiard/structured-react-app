@@ -1,7 +1,12 @@
 import client from './client';
 
-export async function fetchBlogs() {
-  const data = await client.from('travel_blogs').select('*');
+export async function fetchBlogs(id) {
+  let data;
+  if (id) {
+    data = await client.from('travel_blogs').select('*').match({ id });
+  } else {
+    data = await client.from('travel_blogs').select('*');
+  }
   return data.data;
 }
 
