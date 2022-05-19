@@ -13,7 +13,6 @@ export function useBlogContext() {
   const { blogList, dispatch } = context;
 
   useEffect(() => {
-    console.log('in use effect', blogList);
     // if (blogList) return;
     const fetchData = async () => {
       const payload = await fetchBlogs();
@@ -23,7 +22,7 @@ export function useBlogContext() {
     fetchData();
   }, []);
 
-  const add = async () => {
+  const add = async (newBlog) => {
     try {
       const payload = await addBlog(newBlog);
       dispatch({ type: 'ADD', payload });

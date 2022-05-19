@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useBlogContext } from '../hooks/blogsHooks';
+import { userAuth } from '../hooks/userHooks';
 import { parseDate } from '../utils/parseDate';
 
 export default function BlogForm() {
   const { add } = useBlogContext();
+  const { user } = userAuth();
 
   const history = useHistory();
   const [title, setTitle] = useState('');
@@ -16,14 +18,17 @@ export default function BlogForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    add({
+    const newBlog = {
       title,
       location,
-      startDate: parseDate(startDate),
-      endDate: parseDate(endDate),
+      start_date: parseDate(startDate),
+      end_date: parseDate(endDate),
       weather: 'sunny',
       description,
-    });
+      user_id: user.id,
+    };
+    await add(newBlog);
+
     history.push('/blogs');
   };
 

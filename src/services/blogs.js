@@ -7,6 +7,5 @@ export async function fetchBlogs() {
 
 export async function addBlog(newBlog) {
   const data = await client.from('travel_blogs').insert(newBlog);
-  console.log('data', data);
   return data;
 }
