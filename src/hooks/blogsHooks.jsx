@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { BlogContext } from '../context/BlogContext';
 import { addBlog, deleteBlog, editBlog, fetchBlogs } from '../services/blogs';
+import { userAuth } from './userHooks';
 
-export function useBlogContext() {
+export function useBlogContext(id) {
   const context = useContext(BlogContext);
+  const { user } = userAuth();
+  const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [id, setId] = useState(null);
+  // const history = useHistory();
+
   if (context === undefined) {
     throw new Error('useBlogContext must be used within BlogProvider');
   }
@@ -15,13 +20,70 @@ export function useBlogContext() {
 
   useEffect(() => {
     // if (blogList) return;
-    const fetchData = async () => {
-      const payload = await fetchBlogs(id);
-      dispatch({ type: 'FETCH', payload });
-      setLoading(false);
-    };
-    fetchData();
+    console.log('id', id);
+
+    try {
+      const fetchData = async () => {
+        const payload = await fetchBlogs(id);
+        setBlog(payload);
+        setLoading(false);
+        // dispatch({ type: 'FETCH', payload });
+        // setLoading(false);
+      };
+      fetchData();
+    } catch (error) {
+      console.log(error.message);
+    }
   }, [id]);
+
+  const deleteBlogHook = async () => {
+    if (!blog) return;
+    try {
+      const payload = await deleteBlog(blog.id);
+      setBlog(null);
+      if (blogList) dispatch({ type: 'DELETE', payload });
+      return payload; /* do we need this?? */
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const edit = async (modBlog) => {
+    if (!blog) return;
+    try {
+      const payload = await editBlog(modBlog);
+      dispatch({ type: 'EDIT', payload });
+      return payload;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  return { blog, deleteBlogHook, edit, loading };
+}
+
+export function useBlogsContext() {
+  const [loading, setLoading] = useState(true);
+  const context = useContext(BlogContext);
+
+  if (context === undefined) {
+    throw new Error('useBlogContext must be used within BlogProvider');
+  }
+
+  const { blogList, dispatch } = context;
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const payload = await fetchBlogs();
+        dispatch({ type: 'FETCH', payload });
+        setLoading(false);
+      };
+      fetchData();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
 
   const add = async (newBlog) => {
     try {
@@ -32,23 +94,5 @@ export function useBlogContext() {
     }
   };
 
-  const deleteBlogHook = async (id) => {
-    try {
-      const payload = await deleteBlog(id);
-      dispatch({ type: 'DELETE', payload });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const edit = async (newBlog) => {
-    try {
-      const payload = await editBlog(newBlog);
-      dispatch({ type: 'EDIT', payload });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  return { blogList, loading, add, setId, deleteBlogHook, edit };
+  return { blogList, add, loading };
 }

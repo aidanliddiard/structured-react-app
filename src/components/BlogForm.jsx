@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useBlogContext } from '../hooks/blogsHooks';
+import { useBlogsContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
 import { parseDate } from '../utils/parseDate';
 
 export default function BlogForm() {
-  const { add } = useBlogContext();
+  const { add } = useBlogsContext();
   const { user } = userAuth();
 
   const history = useHistory();
