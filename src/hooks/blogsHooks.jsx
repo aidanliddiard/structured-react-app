@@ -32,10 +32,5 @@ export function useBlogContext() {
     }
   };
 
-  // useEffect(() => {
-  //   const thisBlog = initialBlogs.filter((blog) => blog.id === Number(id));
-  //   setBlog(thisBlog[0]);
-  // }, [id]);
-
   return { blogList, loading, add, setId };
 }

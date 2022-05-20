@@ -17,7 +17,7 @@ export default function ListView() {
       ) : (
         blogList.map((blog) => (
           <h3 key={blog.id}>
-            {/* <Link to={`/blogs/${blog.id}`}>{blog.title}</Link> */}
+            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
           </h3>
         ))
       )}
