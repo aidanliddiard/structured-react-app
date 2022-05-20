@@ -1,16 +1,26 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useBlogContext } from '../hooks/blogsHooks';
+import { userAuth } from '../hooks/userHooks';
 
 export default function DetailView() {
-  const { blogList, setId, loading } = useBlogContext();
+  const { blogList, setId, loading, deleteBlogHook } = useBlogContext();
+  const { user } = userAuth();
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     setId(id);
   }, []);
-  console.log('blogList', blogList);
+  //console.log('blogList', blogList);
+
+  const handleDelete = async () => {
+    console.log('indetail', id);
+    await deleteBlogHook(id);
+    history.push('/blogs');
+  };
 
   return (
     <div>
@@ -24,6 +34,11 @@ export default function DetailView() {
           <p>{blogList[0].weather}</p>
           <p>{blogList[0].end_date}</p>
           <p>{blogList[0].description}</p>
+          {user.id === blogList[0].user_id ? (
+            <button onClick={handleDelete}>Delete</button>
+          ) : (
+            <button>Copy</button>
+          )}
         </>
       )}
       {/* TODO: Edit Button + Delete Button will go here? */}

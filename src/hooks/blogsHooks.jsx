@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useContext, useEffect } from 'react';
 import { BlogContext } from '../context/BlogContext';
-import { addBlog, fetchBlogs } from '../services/blogs';
+import { addBlog, deleteBlog, fetchBlogs } from '../services/blogs';
 
 export function useBlogContext() {
   const context = useContext(BlogContext);
@@ -32,5 +32,15 @@ export function useBlogContext() {
     }
   };
 
-  return { blogList, loading, add, setId };
+  const deleteBlogHook = async (id) => {
+    try {
+      //console.log('hooksid', id);
+      const payload = await deleteBlog(id);
+      dispatch({ type: 'DELETE', payload });
+    } catch (error) {
+      console.log('errorMessage:', error.message);
+    }
+  };
+
+  return { blogList, loading, add, setId, deleteBlogHook };
 }
