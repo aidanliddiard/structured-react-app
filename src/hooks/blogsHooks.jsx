@@ -10,7 +10,6 @@ export function useBlogContext(id) {
   const { user } = userAuth();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const history = useHistory();
 
   if (context === undefined) {
     throw new Error('useBlogContext must be used within BlogProvider');
@@ -19,16 +18,11 @@ export function useBlogContext(id) {
   const { blogList, dispatch } = context;
 
   useEffect(() => {
-    // if (blogList) return;
-    console.log('id', id);
-
     try {
       const fetchData = async () => {
         const payload = await fetchBlogs(id);
         setBlog(payload);
         setLoading(false);
-        // dispatch({ type: 'FETCH', payload });
-        // setLoading(false);
       };
       fetchData();
     } catch (error) {

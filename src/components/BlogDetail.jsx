@@ -6,16 +6,16 @@ import { userAuth } from '../hooks/userHooks';
 
 export default function BlogDetail() {
   const { id } = useParams();
-
   const { blog, deleteBlogHook } = useBlogContext(id);
   const { user } = userAuth();
   const history = useHistory();
+
+  if (!blog) return null;
 
   const handleDelete = async () => {
     await deleteBlogHook();
     history.replace('/blogs');
   };
-  console.log('blog', blog);
 
   // const handleEdit = async () => {};
 

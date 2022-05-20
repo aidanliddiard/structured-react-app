@@ -9,6 +9,7 @@ import { userAuth } from '../hooks/userHooks';
 
 export default function DetailView() {
   // const { blogList, setId, deleteBlogHook } = useBlogsContext();
+  
   const { loading } = useBlogContext();
 
   return (
