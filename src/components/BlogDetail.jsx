@@ -6,7 +6,7 @@ import { userAuth } from '../hooks/userHooks';
 
 export default function BlogDetail() {
   const { id } = useParams();
-  const { blog, deleteBlogHook } = useBlogContext(id);
+  const { blog, deleteBlogHook, editButton, editing } = useBlogContext(id);
   const { user } = userAuth();
   const history = useHistory();
 
@@ -17,7 +17,9 @@ export default function BlogDetail() {
     history.replace('/blogs');
   };
 
-  // const handleEdit = async () => {};
+  const handleEdit = () => {
+    editButton();
+  };
 
   return (
     <div>
@@ -29,7 +31,7 @@ export default function BlogDetail() {
       {user.id === blog.user_id ? (
         <>
           <button onClick={handleDelete}>Delete</button>
-          <button>Edit</button>
+          <button onClick={handleEdit}>Edit</button>
         </>
       ) : (
         <button>Copy</button>

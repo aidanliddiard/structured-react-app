@@ -10,6 +10,7 @@ export function useBlogContext(id) {
   const { user } = userAuth();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
 
   if (context === undefined) {
     throw new Error('useBlogContext must be used within BlogProvider');
@@ -42,6 +43,10 @@ export function useBlogContext(id) {
     }
   };
 
+  const editButton = () => {
+    setEditing(true);
+  };
+
   const edit = async (modBlog) => {
     if (!blog) return;
     try {
@@ -53,7 +58,7 @@ export function useBlogContext(id) {
     }
   };
 
-  return { blog, deleteBlogHook, edit, loading };
+  return { blog, deleteBlogHook, edit, loading, editing, editButton };
 }
 
 export function useBlogsContext() {
