@@ -15,6 +15,8 @@ const blogReducer = (state, action) => {
       return [...state, action.payload];
     case 'DELETE':
       return state.filter((item) => item.id !== action.payload.id);
+    case 'EDIT':
+      return [...state, action.payload];
     default:
       throw new Error('not a defined type for reducer');
   }

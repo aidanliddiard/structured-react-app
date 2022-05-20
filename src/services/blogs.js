@@ -16,7 +16,14 @@ export async function addBlog(newBlog) {
 }
 
 export async function deleteBlog(id) {
-  console.log('id', id);
   const data = await client.from('travel_blogs').delete().match({ id });
+  return data;
+}
+
+export async function editBlog(newBlog) {
+  const data = await client
+    .from('travel_blog')
+    .update(newBlog)
+    .match({ id: newBlog.id });
   return data;
 }

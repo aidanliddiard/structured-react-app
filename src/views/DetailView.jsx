@@ -22,6 +22,8 @@ export default function DetailView() {
     history.push('/blogs');
   };
 
+  const handleEdit = async () => {};
+
   return (
     <div>
       <h1>Detail</h1>
@@ -35,7 +37,10 @@ export default function DetailView() {
           <p>{blogList[0].end_date}</p>
           <p>{blogList[0].description}</p>
           {user.id === blogList[0].user_id ? (
-            <button onClick={handleDelete}>Delete</button>
+            <>
+              <button onClick={handleDelete}>Delete</button>
+              <button onClick={handleEdit}>Edit</button>
+            </>
           ) : (
             <button>Copy</button>
           )}
