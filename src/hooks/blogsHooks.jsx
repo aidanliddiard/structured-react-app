@@ -6,6 +6,7 @@ import { addBlog, fetchBlogs } from '../services/blogs';
 export function useBlogContext() {
   const context = useContext(BlogContext);
   const [loading, setLoading] = useState(true);
+  const [id, setId] = useState(null);
   if (context === undefined) {
     throw new Error('useBlogContext must be used within BlogProvider');
   }
@@ -15,12 +16,12 @@ export function useBlogContext() {
   useEffect(() => {
     // if (blogList) return;
     const fetchData = async () => {
-      const payload = await fetchBlogs();
+      const payload = await fetchBlogs(id);
       dispatch({ type: 'FETCH', payload });
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   const add = async (newBlog) => {
     try {
@@ -31,5 +32,5 @@ export function useBlogContext() {
     }
   };
 
-  return { blogList, loading, add };
+  return { blogList, loading, add, setId };
 }

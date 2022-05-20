@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useBlogContext } from '../hooks/blogsHooks';
 
 export default function DetailView() {
-  const { initialBlogs } = useBlogContext();
+  const { blogList, setId, loading } = useBlogContext();
   const { id } = useParams();
-  const [blog, setBlog] = useState({});
 
   useEffect(() => {
-    const thisBlog = initialBlogs.filter((blog) => blog.id === Number(id));
-    setBlog(thisBlog[0]);
-  }, [id]);
+    setId(id);
+  }, []);
+  console.log('blogList', blogList);
 
   return (
     <div>
-      <h1>{blog.title}</h1>
-      <h3>{blog.location}</h3>
-      <p>{blog.weather}</p>
-      <p>{blog.description}</p>
+      <h1>Detail</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <h1>{blogList[0].title}</h1>
+          <h3>{blogList[0].location}</h3>
+          <p>{blogList[0].weather}</p>
+          <p>{blogList[0].end_date}</p>
+          <p>{blogList[0].description}</p>
+        </>
+      )}
       {/* TODO: Edit Button + Delete Button will go here? */}
     </div>
   );
