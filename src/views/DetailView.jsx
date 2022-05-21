@@ -12,8 +12,15 @@ import { userAuth } from '../hooks/userHooks';
 export default function DetailView() {
   // const { blogList, setId, deleteBlogHook } = useBlogsContext();
   const { id } = useParams();
-  const { blog, loading, deleteBlogHook, editing, editButton } =
-    useBlogContext(id);
+  const {
+    blog,
+    loading,
+    deleteBlogHook,
+    editing,
+    editButton,
+    copying,
+    copyButton,
+  } = useBlogContext(id);
 
   if (!blog) return null;
 
@@ -21,13 +28,14 @@ export default function DetailView() {
     <div>
       <h1>Detail</h1>
       {loading && <p>Loading...</p>}
-      {editing ? (
-        <BlogForm blog={blog} />
+      {editing || copying ? (
+        <BlogForm blog={blog} editing={editing} copying={copying} />
       ) : (
         <BlogDetail
           editButton={editButton}
           blog={blog}
           deleteBlogHook={deleteBlogHook}
+          copyButton={copyButton}
         />
       )}
     </div>

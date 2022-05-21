@@ -4,7 +4,12 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useBlogContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
 
-export default function BlogDetail({ editButton, deleteBlogHook, blog }) {
+export default function BlogDetail({
+  editButton,
+  deleteBlogHook,
+  blog,
+  copyButton,
+}) {
   // const { id } = useParams();
   // const { blog, deleteBlogHook, editing } = useBlogContext(id);
   const { user } = userAuth();
@@ -19,6 +24,9 @@ export default function BlogDetail({ editButton, deleteBlogHook, blog }) {
 
   const handleEdit = () => {
     editButton();
+  };
+  const handleCopy = () => {
+    copyButton();
   };
 
   return (
@@ -35,7 +43,7 @@ export default function BlogDetail({ editButton, deleteBlogHook, blog }) {
           <button onClick={handleEdit}>Edit</button>
         </>
       ) : (
-        <button>Copy</button>
+        <button onClick={handleCopy}>Copy</button>
       )}
     </div>
   );

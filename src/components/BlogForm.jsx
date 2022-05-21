@@ -5,12 +5,15 @@ import { userAuth } from '../hooks/userHooks';
 import { editBlog } from '../services/blogs';
 import { parseDate, unParseDate } from '../utils/parseDate';
 
-export default function BlogForm({ blog = null }) {
+export default function BlogForm({ blog = null, editing, copying }) {
   const { add } = useBlogsContext();
   const { edit } = useBlogContext();
   const { user } = userAuth();
+  const history = useHistory();
 
-  const [title, setTitle] = useState(blog?.title || '');
+  const [title, setTitle] = useState(
+    copying ? `Copy of ${blog.title}` : blog?.title || ''
+  );
   const [location, setLocation] = useState(blog?.location || '');
   const [startDate, setStartDate] = useState(blog?.start_date.toString() || '');
   const [endDate, setEndDate] = useState(blog?.end_date.toString() || '');
@@ -21,7 +24,6 @@ export default function BlogForm({ blog = null }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!startDate || !endDate) return setAlert('Date is required!');
-    console.log('SD', startDate);
     const newBlog = {
       title,
       location,
@@ -31,7 +33,7 @@ export default function BlogForm({ blog = null }) {
       description,
       user_id: user.id,
     };
-    if (blog) {
+    if (editing) {
       await edit(newBlog, blog.id);
     } else {
       await add(newBlog);
@@ -43,6 +45,8 @@ export default function BlogForm({ blog = null }) {
   return (
     <>
       {alert && <p style={{ color: 'red' }}>{alert}</p>}
+      {editing && <h2>Editing</h2>}
+      {copying && <h2>Copy of {blog.title}</h2>}
       <form onSubmit={handleSubmit}>
         <input
           aria-label="title input"
