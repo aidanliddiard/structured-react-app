@@ -48,10 +48,12 @@ export function useBlogContext(id) {
     console.log('editing in Hook', editing);
   };
 
-  const edit = async (modBlog) => {
+  const edit = async (newBlog, id) => {
     if (!blog) return;
+    console.log('EDIT newBlog', newBlog);
+    console.log('EDIT  id', id);
     try {
-      const payload = await editBlog(modBlog);
+      const payload = await editBlog(newBlog, id);
       dispatch({ type: 'EDIT', payload });
       return payload;
     } catch (error) {

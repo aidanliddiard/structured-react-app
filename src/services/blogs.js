@@ -20,10 +20,10 @@ export async function deleteBlog(id) {
   return data;
 }
 
-export async function editBlog(newBlog) {
-  const data = await client
-    .from('travel_blog')
-    .update(newBlog)
-    .match({ id: newBlog.id });
+export async function editBlog(newBlog, id) {
+  console.log('SUPA newBlog', newBlog);
+  console.log('SUPA id', id);
+  const data = await client.from('travel_blogs').update(newBlog).match({ id });
+  console.log('data', data);
   return data;
 }

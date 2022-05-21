@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useBlogsContext } from '../hooks/blogsHooks';
+import { useBlogContext, useBlogsContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
+import { editBlog } from '../services/blogs';
 import { parseDate, unParseDate } from '../utils/parseDate';
 
 export default function BlogForm({ blog = null }) {
   const { add } = useBlogsContext();
+  const { edit } = useBlogContext();
   const { user } = userAuth();
-  const newStart = unParseDate(blog?.startDate);
-  console.log('newStart', newStart);
+  // const newStart = unParseDate(blog?.startDate);
+  // console.log('newStart', newStart);
   const history = useHistory();
   const [title, setTitle] = useState(blog?.title || '');
   const [location, setLocation] = useState(blog?.location || '');
@@ -28,8 +30,13 @@ export default function BlogForm({ blog = null }) {
       description,
       user_id: user.id,
     };
-    // if
-    await add(newBlog);
+    if (blog) {
+      console.log('newBlog', newBlog);
+      console.log(blog.id);
+      await edit(newBlog, blog.id);
+    } else {
+      await add(newBlog);
+    }
 
     history.push('/blogs');
   };

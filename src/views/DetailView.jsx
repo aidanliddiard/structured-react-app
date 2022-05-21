@@ -17,13 +17,14 @@ export default function DetailView() {
   console.log('editing', editing);
 
   if (!blog) return null;
+  console.log('blog', blog);
 
   return (
     <div>
       <h1>Detail</h1>
       {loading && <p>Loading...</p>}
       {editing ? (
-        <BlogForm blog={blog}/>
+        <BlogForm blog={blog} />
       ) : (
         <BlogDetail
           editButton={editButton}
