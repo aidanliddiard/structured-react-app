@@ -9,18 +9,24 @@ export default function BlogForm({ blog = null }) {
   const { add } = useBlogsContext();
   const { edit } = useBlogContext();
   const { user } = userAuth();
-  // const newStart = unParseDate(blog?.startDate);
-  // console.log('newStart', newStart);
+
+  const newStart = unParseDate(blog?.start_date);
+  const newEnd = unParseDate(blog?.end_date);
+
   const history = useHistory();
+
   const [title, setTitle] = useState(blog?.title || '');
   const [location, setLocation] = useState(blog?.location || '');
-  const [startDate, setStartDate] = useState(blog?.startDate || '');
-  const [endDate, setEndDate] = useState(blog?.endDate || '');
+  const [startDate, setStartDate] = useState(newStart || '');
+  const [endDate, setEndDate] = useState(newEnd || '');
   //const [weather, setWeather] = useState('');
   const [description, setDescription] = useState(blog?.description || '');
+  const [alert, setAlert] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!startDate || !endDate) return setAlert('Date is required!');
+    console.log('SD', startDate);
     const newBlog = {
       title,
       location,
@@ -31,8 +37,6 @@ export default function BlogForm({ blog = null }) {
       user_id: user.id,
     };
     if (blog) {
-      console.log('newBlog', newBlog);
-      console.log(blog.id);
       await edit(newBlog, blog.id);
     } else {
       await add(newBlog);
@@ -43,6 +47,7 @@ export default function BlogForm({ blog = null }) {
 
   return (
     <>
+      {alert && <p style={{ color: 'red' }}>{alert}</p>}
       <form onSubmit={handleSubmit}>
         <input
           aria-label="title input"
@@ -65,6 +70,8 @@ export default function BlogForm({ blog = null }) {
           name="startDate"
           type="date"
           value={startDate}
+          // id={dateRequired}
+          // defaultValue={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
         <input
@@ -72,6 +79,7 @@ export default function BlogForm({ blog = null }) {
           name="endDate"
           type="date"
           value={endDate}
+          // id={dateRequired}
           onChange={(e) => setEndDate(e.target.value)}
         />
         <div>

@@ -21,9 +21,6 @@ export async function deleteBlog(id) {
 }
 
 export async function editBlog(newBlog, id) {
-  console.log('SUPA newBlog', newBlog);
-  console.log('SUPA id', id);
   const data = await client.from('travel_blogs').update(newBlog).match({ id });
-  console.log('data', data);
   return data;
 }

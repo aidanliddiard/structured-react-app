@@ -14,10 +14,8 @@ export default function DetailView() {
   const { id } = useParams();
   const { blog, loading, deleteBlogHook, editing, editButton } =
     useBlogContext(id);
-  console.log('editing', editing);
 
   if (!blog) return null;
-  console.log('blog', blog);
 
   return (
     <div>
