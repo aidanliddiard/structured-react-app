@@ -3,7 +3,7 @@ import client from './client';
 export async function fetchBlogs(id) {
   let data;
   if (id) {
-    data = await client.from('travel_blogs').select('*').match({ id });
+    data = await client.from('travel_blogs').select('*').match({ id }).single();
   } else {
     data = await client.from('travel_blogs').select('*');
   }
@@ -20,10 +20,7 @@ export async function deleteBlog(id) {
   return data;
 }
 
-export async function editBlog(newBlog) {
-  const data = await client
-    .from('travel_blog')
-    .update(newBlog)
-    .match({ id: newBlog.id });
+export async function editBlog(newBlog, id) {
+  const data = await client.from('travel_blogs').update(newBlog).match({ id });
   return data;
 }

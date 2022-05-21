@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useBlogContext } from '../hooks/blogsHooks';
+import { useBlogContext, useBlogsContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
-import { parseDate } from '../utils/parseDate';
+import { editBlog } from '../services/blogs';
+import { parseDate, unParseDate } from '../utils/parseDate';
 
-export default function BlogForm() {
-  const { add } = useBlogContext();
+export default function BlogForm({ blog = null, editing, copying }) {
+  const { add } = useBlogsContext();
+  const { edit } = useBlogContext();
   const { user } = userAuth();
-
   const history = useHistory();
-  const [title, setTitle] = useState('');
-  const [location, setLocation] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+
+  const [title, setTitle] = useState(
+    copying ? `Copy of ${blog.title}` : blog?.title || ''
+  );
+  const [location, setLocation] = useState(blog?.location || '');
+  const [startDate, setStartDate] = useState(blog?.start_date.toString() || '');
+  const [endDate, setEndDate] = useState(blog?.end_date.toString() || '');
   //const [weather, setWeather] = useState('');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(blog?.description || '');
+  const [alert, setAlert] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!startDate || !endDate) return setAlert('Date is required!');
     const newBlog = {
       title,
       location,
@@ -27,13 +33,20 @@ export default function BlogForm() {
       description,
       user_id: user.id,
     };
-    await add(newBlog);
+    if (editing) {
+      await edit(newBlog, blog.id);
+    } else {
+      await add(newBlog);
+    }
 
     history.push('/blogs');
   };
 
   return (
     <>
+      {alert && <p style={{ color: 'red' }}>{alert}</p>}
+      {editing && <h2>Editing</h2>}
+      {copying && <h2>Copy of {blog.title}</h2>}
       <form onSubmit={handleSubmit}>
         <input
           aria-label="title input"
@@ -63,6 +76,7 @@ export default function BlogForm() {
           name="endDate"
           type="date"
           value={endDate}
+          min={startDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
         <div>
