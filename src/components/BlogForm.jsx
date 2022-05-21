@@ -65,8 +65,6 @@ export default function BlogForm({ blog = null }) {
           name="startDate"
           type="date"
           value={startDate}
-          // id={dateRequired}
-          // defaultValue={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
         <input
@@ -74,7 +72,7 @@ export default function BlogForm({ blog = null }) {
           name="endDate"
           type="date"
           value={endDate}
-          // id={dateRequired}
+          min={startDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
         <div>
