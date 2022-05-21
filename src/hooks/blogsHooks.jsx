@@ -45,6 +45,7 @@ export function useBlogContext(id) {
 
   const editButton = () => {
     setEditing(true);
+    console.log('editing in Hook', editing);
   };
 
   const edit = async (modBlog) => {

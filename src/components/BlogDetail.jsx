@@ -4,9 +4,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useBlogContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
 
-export default function BlogDetail() {
-  const { id } = useParams();
-  const { blog, deleteBlogHook, editButton, editing } = useBlogContext(id);
+export default function BlogDetail({ editButton, deleteBlogHook, blog }) {
+  // const { id } = useParams();
+  // const { blog, deleteBlogHook, editing } = useBlogContext(id);
   const { user } = userAuth();
   const history = useHistory();
 

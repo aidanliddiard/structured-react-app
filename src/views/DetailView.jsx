@@ -10,30 +10,42 @@ import { userAuth } from '../hooks/userHooks';
 
 export default function DetailView() {
   // const { blogList, setId, deleteBlogHook } = useBlogsContext();
-
-  const { loading, editing } = useBlogContext();
+  const { id } = useParams();
+  const { blog, loading, deleteBlogHook, editing, editButton } =
+    useBlogContext(id);
   console.log('editing', editing);
+
+  if (!blog) return null;
 
   let content;
 
-  if (editing) {
-    content = (
-      <>
-        <EditBlog />
-      </>
-    );
-  } else {
-    content = (
-      <>
-        <BlogDetail />
-      </>
-    );
-  }
+  // if (editing) {
+  //   content = (
+  //     <>
+  //       <EditBlog />
+  //     </>
+  //   );
+  // } else {
+  //   content = (
+  //     <>
+  //       <BlogDetail />
+  //     </>
+  //   );
+  // }
 
   return (
     <div>
       <h1>Detail</h1>
-      {loading ? <p>Loading...</p> : content}
+      {/* {loading ? <p>Loading...</p> : content} */}
+      {editing ? (
+        <EditBlog />
+      ) : (
+        <BlogDetail
+          editButton={editButton}
+          blog={blog}
+          deleteBlogHook={deleteBlogHook}
+        />
+      )}
     </div>
   );
 }
