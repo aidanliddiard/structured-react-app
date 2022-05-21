@@ -26,6 +26,7 @@ export default function BlogDetail({ editButton, deleteBlogHook, blog }) {
       <h1>{blog.title}</h1>
       <h3>{blog.location}</h3>
       <p>{blog.weather}</p>
+      <p>{blog.start_date}</p>
       <p>{blog.end_date}</p>
       <p>{blog.description}</p>
       {user.id === blog.user_id ? (

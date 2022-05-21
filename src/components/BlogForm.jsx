@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useBlogsContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
-import { parseDate } from '../utils/parseDate';
+import { parseDate, unParseDate } from '../utils/parseDate';
 
-export default function BlogForm() {
+export default function BlogForm({ blog = null }) {
   const { add } = useBlogsContext();
   const { user } = userAuth();
-
+  const newStart = unParseDate(blog?.startDate);
+  console.log('newStart', newStart);
   const history = useHistory();
-  const [title, setTitle] = useState('');
-  const [location, setLocation] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [title, setTitle] = useState(blog?.title || '');
+  const [location, setLocation] = useState(blog?.location || '');
+  const [startDate, setStartDate] = useState(blog?.startDate || '');
+  const [endDate, setEndDate] = useState(blog?.endDate || '');
   //const [weather, setWeather] = useState('');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(blog?.description || '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ export default function BlogForm() {
       description,
       user_id: user.id,
     };
+    // if
     await add(newBlog);
 
     history.push('/blogs');
