@@ -10,15 +10,10 @@ export default function BlogForm({ blog = null }) {
   const { edit } = useBlogContext();
   const { user } = userAuth();
 
-  const newStart = unParseDate(blog?.start_date);
-  const newEnd = unParseDate(blog?.end_date);
-
-  const history = useHistory();
-
   const [title, setTitle] = useState(blog?.title || '');
   const [location, setLocation] = useState(blog?.location || '');
-  const [startDate, setStartDate] = useState(newStart || '');
-  const [endDate, setEndDate] = useState(newEnd || '');
+  const [startDate, setStartDate] = useState(blog?.start_date.toString() || '');
+  const [endDate, setEndDate] = useState(blog?.end_date.toString() || '');
   //const [weather, setWeather] = useState('');
   const [description, setDescription] = useState(blog?.description || '');
   const [alert, setAlert] = useState('');
