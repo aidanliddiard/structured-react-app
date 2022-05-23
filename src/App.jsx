@@ -1,4 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
+import Header from './components/Header';
 import { BlogProvider } from './context/BlogContext';
 import { UserProvider } from './context/UserContext';
 import AddPage from './views/AddPage';
@@ -11,6 +12,7 @@ export default function App() {
     <>
       <UserProvider>
         <BlogProvider>
+          <Header />
           <Switch>
             <Route path={'/auth'}>
               <AuthView />

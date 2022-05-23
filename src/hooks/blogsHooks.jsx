@@ -46,17 +46,14 @@ export function useBlogContext(id) {
 
   const editButton = () => {
     setEditing(true);
-    // console.log('editing in Hook', editing);
   };
-  
+
   const copyButton = () => {
     setCopying(true);
   };
 
   const edit = async (newBlog, id) => {
     if (!blog) return;
-    console.log('EDIT newBlog', newBlog);
-    console.log('EDIT  id', id);
     try {
       const payload = await editBlog(newBlog, id);
       dispatch({ type: 'EDIT', payload });

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import { signInUser, signUpUser } from '../services/user';
+import { signInUser, signOutUser, signUpUser } from '../services/user';
 
 export const userAuth = () => {
   const context = useContext(UserContext);
@@ -16,8 +16,6 @@ export const userAuth = () => {
   }
 
   const { user, setUser } = context;
-
-  // const authed = user?.email;
 
   const handleAuth = async (authType) => {
     try {
@@ -35,5 +33,10 @@ export const userAuth = () => {
     }
   };
 
-  return { user, handleAuth, email, setEmail, password, setPassword, error };
+  const logOut = async () => {
+    await signOutUser();
+    history.replace('/auth');
+  }
+
+  return { user, handleAuth, email, setEmail, password, setPassword, error, logOut };
 };
