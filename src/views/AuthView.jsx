@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { userAuth } from '../hooks/userHooks';
 
 export default function AuthView() {

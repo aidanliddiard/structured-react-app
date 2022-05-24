@@ -1,13 +1,9 @@
-import { useState } from 'react';
-import { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
 import { BlogContext } from '../context/BlogContext';
 import { addBlog, deleteBlog, editBlog, fetchBlogs } from '../services/blogs';
-import { userAuth } from './userHooks';
 
 export function useBlogContext(id) {
   const context = useContext(BlogContext);
-  const { user } = userAuth();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import { useBlogContext, useBlogsContext } from '../hooks/blogsHooks';
 import { userAuth } from '../hooks/userHooks';
-import { editBlog } from '../services/blogs';
 import { parseDate } from '../utils/parseDate';
 
 export default function BlogForm({ blog = null, editing, copying }) {

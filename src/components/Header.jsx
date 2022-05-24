@@ -21,13 +21,16 @@ export default function Header() {
             <NavLink to="/add">Add</NavLink>
           </li>
         )}
-        <li>
-          {user.email ? (
-            <button onClick={logOut}>Sign Out</button>
-          ) : (
-            <NavLink to="/auth">Sign In</NavLink>
-          )}
-        </li>
+        <div>
+          {user.email && <p>Hello {user.email}</p>}
+          <li>
+            {user.email ? (
+              <button onClick={logOut}>Sign Out</button>
+            ) : (
+              <NavLink to="/auth">Sign In</NavLink>
+            )}
+          </li>
+        </div>
       </ul>
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import BlogDetail from '../components/BlogDetail';
 import BlogForm from '../components/BlogForm';
-import { useBlogContext, useBlogsContext } from '../hooks/blogsHooks';
+import { useBlogContext } from '../hooks/blogsHooks';
 
 export default function DetailView() {
   const { id } = useParams();

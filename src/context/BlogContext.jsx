@@ -1,11 +1,6 @@
-import { createContext } from 'react';
-import { useReducer } from 'react';
-import { useContext } from 'react';
-import { blogData } from '../../MockBlogData';
+import { createContext, useReducer } from 'react';
 
 export const BlogContext = createContext();
-
-// const initialBlogs = {};
 
 const blogReducer = (state, action) => {
   switch (action.type) {

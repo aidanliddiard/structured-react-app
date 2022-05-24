@@ -1,7 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { useBlogContext } from '../hooks/blogsHooks';
+import { useHistory } from 'react-router-dom';
 import { userAuth } from '../hooks/userHooks';
 
 export default function BlogDetail({
@@ -10,8 +8,6 @@ export default function BlogDetail({
   blog,
   copyButton,
 }) {
-  // const { id } = useParams();
-  // const { blog, deleteBlogHook, editing } = useBlogContext(id);
   const { user } = userAuth();
   const history = useHistory();
 
