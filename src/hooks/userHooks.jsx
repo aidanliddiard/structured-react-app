@@ -35,8 +35,18 @@ export const userAuth = () => {
 
   const logOut = async () => {
     await signOutUser();
+    setUser({ id: '', email: '' });
     history.replace('/auth');
-  }
+  };
 
-  return { user, handleAuth, email, setEmail, password, setPassword, error, logOut };
+  return {
+    user,
+    handleAuth,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    error,
+    logOut,
+  };
 };
