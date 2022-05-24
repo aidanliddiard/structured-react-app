@@ -22,7 +22,7 @@ export default function Header() {
           </li>
         )}
         <div>
-          {user.email && <p>Hello {user.email}</p>}
+          {user.email && <p>Hello {user.email}!</p>}
           <li>
             {user.email ? (
               <button onClick={logOut}>Sign Out</button>
