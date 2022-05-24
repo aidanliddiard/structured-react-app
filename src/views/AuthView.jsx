@@ -8,7 +8,6 @@ export default function AuthView() {
     userAuth();
 
   const [authType, setAuthType] = useState('login');
-  // const [error, setError] = useState('');
 
   return (
     <>
