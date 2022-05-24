@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { userAuth } from '../hooks/userHooks';
 
 export default function AuthView() {
@@ -8,7 +7,6 @@ export default function AuthView() {
     userAuth();
 
   const [authType, setAuthType] = useState('login');
-  // const [error, setError] = useState('');
 
   return (
     <>

@@ -1,13 +1,9 @@
-import { useState } from 'react';
-import { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
 import { BlogContext } from '../context/BlogContext';
 import { addBlog, deleteBlog, editBlog, fetchBlogs } from '../services/blogs';
-import { userAuth } from './userHooks';
 
 export function useBlogContext(id) {
   const context = useContext(BlogContext);
-  const { user } = userAuth();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -46,17 +42,14 @@ export function useBlogContext(id) {
 
   const editButton = () => {
     setEditing(true);
-    // console.log('editing in Hook', editing);
   };
-  
+
   const copyButton = () => {
     setCopying(true);
   };
 
   const edit = async (newBlog, id) => {
     if (!blog) return;
-    console.log('EDIT newBlog', newBlog);
-    console.log('EDIT  id', id);
     try {
       const payload = await editBlog(newBlog, id);
       dispatch({ type: 'EDIT', payload });

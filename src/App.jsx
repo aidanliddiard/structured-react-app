@@ -1,4 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
+import Header from './components/Header';
+import PrivateRoute from './components/PrivateRoute';
 import { BlogProvider } from './context/BlogContext';
 import { UserProvider } from './context/UserContext';
 import AddPage from './views/AddPage';
@@ -11,19 +13,20 @@ export default function App() {
     <>
       <UserProvider>
         <BlogProvider>
+          <Header />
           <Switch>
             <Route path={'/auth'}>
               <AuthView />
             </Route>
-            <Route path={'/blogs/:id'}>
+            <PrivateRoute path={'/blogs/:id'}>
               <DetailView />
-            </Route>
-            <Route path={'/blogs'}>
+            </PrivateRoute>
+            <PrivateRoute path={'/blogs'}>
               <ListView />
-            </Route>
-            <Route path={'/add'}>
+            </PrivateRoute>
+            <PrivateRoute path={'/add'}>
               <AddPage />
-            </Route>
+            </PrivateRoute>
             <Route path={'/'}>
               <Home />
             </Route>
